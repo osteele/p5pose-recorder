@@ -79,7 +79,7 @@ function buttons() {
       let startTime = poses[0].timestamp;
       let clip = poses.slice(inPoint, outPoint)
         .map(pose => ({ ...pose, timestamp: pose.timestamp - startTime }));
-      saveJSON({ poses: clip }, "poses.json");
+      saveJSON({ version: 1, poses: clip }, "poses.json");
     });
 }
 
