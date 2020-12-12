@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+}
+
+body.loading #status { display: block; }
+#status { display: none; }
+
+body.recording .unless-recording, .if-recording { display: none; }
+body.recording .if-recording { display: block; }
+
+body.editing .unless-editing, .if-editing { display: none; }
+body.editing .if-editing { display: block; }
