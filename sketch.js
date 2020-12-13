@@ -11,8 +11,10 @@ function setup() {
   cam.size(width, height);
 
   let poseNet = ml5.poseNet(
-    cam,
-    { flipHorizontal: true, detectionType: "single" },
+    cam, {
+    flipHorizontal: true,
+    detectionType: "single"
+  },
     () => {
       document.body.className = "recording";
     }
@@ -32,7 +34,7 @@ function setup() {
 
 function buttons() {
   createButton("Record")
-    .class('unless-recording')
+    .class("unless-recording")
     .position(10, 30)
     .mousePressed(() => {
       isRecording = true;
@@ -41,7 +43,7 @@ function buttons() {
     });
 
   createButton("Stop")
-    .class('if-recording')
+    .class("if-recording")
     .position(10, 30)
     .mousePressed(() => {
       isRecording = false;
@@ -52,9 +54,7 @@ function buttons() {
       timeline.attribute("max", poses.length);
     });
 
-  timeline = createSlider(0)
-    .style("width", `${width}px`)
-    .class("if-editing");
+  timeline = createSlider(0).style("width", `${width}px`).class("if-editing");
 
   createButton("Set In-Point")
     .class("if-editing")
@@ -77,9 +77,16 @@ function buttons() {
     .position(10, 440)
     .mousePressed(() => {
       let startTime = poses[0].timestamp;
-      let clip = poses.slice(inPoint, outPoint)
-        .map(pose => ({ ...pose, timestamp: pose.timestamp - startTime }));
-      saveJSON({ version: 1, poses: clip }, "poses.json");
+      let clip = poses
+        .slice(inPoint, outPoint)
+        .map((pose) => ({
+          ...pose,
+          timestamp: pose.timestamp - startTime
+        }));
+      saveJSON({
+        version: 1,
+        poses: clip
+      }, "poses.json");
     });
 }
 
@@ -100,7 +107,12 @@ function draw() {
   if (!isRecording) {
     fill(0, 128, 0, 100);
     noStroke();
-    rect(inPoint * width / poses.length, height, (outPoint - inPoint) * width / poses.length, -10);
+    rect(
+      (inPoint * width) / poses.length,
+      height,
+      ((outPoint - inPoint) * width) / poses.length,
+      -10
+    );
   }
   if (!isRecording) {
     currentPose = poses[timeline.value()];
